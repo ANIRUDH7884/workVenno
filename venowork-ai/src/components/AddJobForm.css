@@ -1,0 +1,90 @@
+.add-job-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-job-form__fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.add-job-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-job-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.add-job-form__field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.add-job-form__field input {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.add-job-form__field input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-job-form__field input:focus-visible {
+  border-color: var(--accent);
+}
+
+.add-job-form__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.add-job-form__error {
+  font-size: 0.82rem;
+  color: var(--status-rejected);
+  margin-right: auto;
+}
+
+.add-job-form__submit {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.add-job-form__submit:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.add-job-form__submit:disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .add-job-form__fields {
+    grid-template-columns: 1fr;
+  }
+}

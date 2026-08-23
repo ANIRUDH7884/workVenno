@@ -1,8 +1,17 @@
 import puppeteer from "puppeteer";
+import open from "open";
 import logger from "../utils/logger.js";
 import userData from "../config/userData.js";
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// 🔹 Decide which sites should open manually
+const isManualSite = (url) => {
+  return (
+    url.includes("linkedin.com") ||
+    url.includes("indeed.com")
+  );
+};
 
 // 🔹 Click button by text
 const clickButtonByText = async (page, text) => {
@@ -50,9 +59,18 @@ const fillInput = async (page, keyword, value) => {
   return false;
 };
 
+// 🔹 Main function
 export const openJobPage = async (url) => {
-  logger.info(`Launching browser for: ${url}`);
+  logger.info(`Processing job URL: ${url}`);
 
+  // 🔥 MANUAL MODE (safe sites)
+  if (isManualSite(url)) {
+    await open(url);
+    logger.info("Opened in default browser (manual apply)");
+    return;
+  }
+
+  // 🟢 AUTO MODE (Puppeteer)
   try {
     const browser = await puppeteer.launch({
       headless: false,
@@ -66,13 +84,16 @@ export const openJobPage = async (url) => {
 
     await delay(3000);
 
+    // 🔹 Click Apply
     await clickButtonByText(page, "apply");
 
     await delay(3000);
 
+    // 🔹 Fill fields
     await fillInput(page, "name", userData.name);
     await fillInput(page, "email", userData.email);
 
+    // 🔹 Upload resume
     try {
       const fileInput = await page.$('input[type="file"]');
 
